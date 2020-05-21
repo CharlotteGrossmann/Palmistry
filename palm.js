@@ -1,60 +1,97 @@
-function hasGetUserMedia() {
-  return !!(navigator.mediaDevices &&
-    navigator.mediaDevices.getUserMedia);
-}
 
-if (hasGetUserMedia()) {
-  console.log("working camera");
-  // Good to go!
-} else {
-  alert('getUserMedia() is not supported by your browser');
-}
+var elemright = ["assets/AIR.png","assets/FIRE.png","assets/WATER.png","assets/EARTH.png"];
+var elemleft = ["assets/AIRLEFT.png","assets/FIRELEFT.png","assets/WATERLEFT.png","assets/EARTHLEFT.png"];
+var elem = elemright;
+var x=1;
+var flip = (1);
 
-const videoElement = document.querySelector('video');
-const videoSelect = document.querySelector('select#videoSource');
+document.addEventListener('keydown', function(event) {
+   
+    
+    if (event.code == 'ArrowRight' || event.code == 'KeyDww') {
+        // right arrow
+        
+        x++;
+        if(x==4){
+            x=0;
+        }
+        document.getElementById("img").src=elem[x];
+       
+    }
+    else if (event.code == 'ArrowLeft' || event.code == 'KeyA') {
+       // left arrow
+        x--;
+        if(x==(-1)){
+            x=3;
+        }
+        document.getElementById("img").src=elem[x]; 
+   
+    }
+    else if(event.code == 'KeyW' || event.code == 'ArrowUp'){
+      
+        if(elem==elemright){
+            elem=elemleft;
+        }
+        else{
+            elem=elemright;
+        }
+        document.getElementById("img").src=elem[x];
+        
 
-navigator.mediaDevices.enumerateDevices()
-  .then(gotDevices).then(getStream).catch(handleError);
+    }
+});
 
-videoSelect.onchange = getStream;
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+var xDown = null;                                                        
+var yDown = null;  
 
-function gotDevices(deviceInfos) {
-  for (let i = 0; i !== deviceInfos.length; ++i) {
-    const deviceInfo = deviceInfos[i];
-    const option = document.createElement('option');
-    option.value = deviceInfo.deviceId;
-    if (deviceInfo.kind === 'videoinput') {
-      option.text = deviceInfo.label || 'camera ' +
-        (videoSelect.length + 1);
-      videoSelect.appendChild(option);
+function handleTouchStart(evt) {                                         
+    xDown = evt.touches[0].clientX;                                      
+    yDown = evt.touches[0].clientY;                                      
+}; 
+
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+        /* left swipe */ 
+        
+            x++;
+            if(x==4){
+                x=0;
+            }
+            document.getElementById("img").src=elem[x];
+        } else {
+        /* right swipe */
+            x--;
+            if(x==(-1)){
+                x=3;
+            }
+            document.getElementById("img").src=elem[x]; 
+        }                       
     } else {
-      console.log('Found another kind of device: ', deviceInfo);
+        if ( yDiff > 0 ) {
+        /* up swipe */ 
+            if(elem==elemright){
+                elem=elemleft;
+            }
+            else{
+                elem=elemright;
+            }
+            document.getElementById("img").src=elem[x];
+        } else { 
+        /* down swipe */
+        }                                                                 
     }
-  }
-}
-
-function getStream() {
-  if (window.stream) {
-    window.stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-  }
-
-  const constraints = {
-    video: {
-      deviceId: {exact: videoSelect.value}
-    }
-  };
-
-  navigator.mediaDevices.getUserMedia(constraints).
-    then(gotStream).catch(handleError);
-}
-
-function gotStream(stream) {
-  window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
-}
-
-function handleError(error) {
-  console.error('Error: ', error);
-}
+    /* reset values */
+    xDown = null;
+    yDown = null;                                             
+};

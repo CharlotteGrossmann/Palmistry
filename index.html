@@ -2,28 +2,28 @@
 <html>
   <head>
     <title>Palmistry</title>
-    <script src="palm.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
     
   </head>
   <body>
-    <div id="overlay">
-      <img src="./assets/emptyPalm.svg" alt="Italian Trulli">
+    <div id ="help">
+      <p>
+        Arrow Keys, WASD or swipe to navigate. <br>
+        Up = change Hand <br>
+        left/right = change template
+      </p>
     </div>
-    <div class="videoDiv">
-      <video class="video" autoplay></video>
+    <div class="overlay">
+        <div class="black">
+            <img src="./assets/mainPage.svg" >
+        </div>
+        
+      
+        <div id="center">
+            <a id="button" href="./palm.html">BEGIN</a>
+        </div>
     </div>
-   
-
-    <script>
-      const constraints = {
-        video: true
-      };
-
-      const video = document.querySelector('video');
-
-      navigator.mediaDevices.getUserMedia(constraints).
-        then((stream) => {video.srcObject = stream});
-    </script>
   </body>
-</html>
+</html>   
