@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Palmistry</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+  </head>
+  <body>
+    <div id="overlay">
+      <img id = "img" src="./assets/FIRE.png" >
+    </div>
+    <div class="videoDiv">
+      <video class="video" autoplay></video>
+    </div>
+   
+
+    <script>
+      const constraints = {
+        video: true
+      };
+
+      const video = document.querySelector('video');
+
+      navigator.mediaDevices.getUserMedia(constraints).
+        then((stream) => {video.srcObject = stream});
+    </script>
+    <script src="palm.js"></script>
+  </body>
+</html>
