@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Palmistry</title>
+    <script src="palm.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+  </head>
+  <body>
+    <div id="overlay">
+      <img src="./assets/emptyPalm.svg" alt="Italian Trulli">
+    </div>
+    <div class="videoDiv">
+      <video class="video" autoplay></video>
+    </div>
+   
+
+    <script>
+      const constraints = {
+        video: true
+      };
+
+      const video = document.querySelector('video');
+
+      navigator.mediaDevices.getUserMedia(constraints).
+        then((stream) => {video.srcObject = stream});
+    </script>
+  </body>
+</html>
