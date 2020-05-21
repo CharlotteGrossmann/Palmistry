@@ -1,9 +1,15 @@
 
 var elemright = ["assets/AIR.png","assets/FIRE.png","assets/WATER.png","assets/EARTH.png"];
 var elemleft = ["assets/AIRLEFT.png","assets/FIRELEFT.png","assets/WATERLEFT.png","assets/EARTHLEFT.png"];
-var elem = elemright;
-var x=1;
+
+var nelemright = ["assets/shadow/nair.png","assets/shadow/nfire.png","assets/shadow/nwater.png","assets/shadow/nearth.png"];
+var nelemleft = ["assets/shadow/nairleft.png","assets/shadow/nfireleft.png","assets/shadow/nwaterleft.png","assets/shadow/nearthleft.png"];
+
+var elem = nelemright;
+var x=0;
 var flip = (1);
+
+document.getElementById("img").src=elem[x];
 
 document.addEventListener('keydown', function(event) {
    
@@ -29,11 +35,11 @@ document.addEventListener('keydown', function(event) {
     }
     else if(event.code == 'KeyW' || event.code == 'ArrowUp'){
       
-        if(elem==elemright){
-            elem=elemleft;
+        if(elem==nelemright){
+            elem=nelemleft;
         }
         else{
-            elem=elemright;
+            elem=nelemright;
         }
         document.getElementById("img").src=elem[x];
         
